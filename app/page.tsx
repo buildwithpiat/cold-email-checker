@@ -65,42 +65,43 @@ export default function Home() {
     : '#ffffff';
 
   return (
-    <main className="min-h-screen bg-[#0A0A0A] text-white">
-      <div className="max-w-3xl mx-auto px-6 py-20">
+    <div style={{ minHeight: '100vh', background: '#0A0A0A', color: 'white', fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif' }}>
+      <div style={{ maxWidth: '800px', margin: '0 auto', padding: '80px 24px' }}>
+        
         {/* Header */}
-        <div className="text-center mb-16">
-          <div className="inline-block px-3 py-1 bg-white/5 border border-white/10 rounded-full text-xs text-gray-400 mb-6">
+        <div style={{ textAlign: 'center', marginBottom: '64px' }}>
+          <div style={{ display: 'inline-block', padding: '8px 16px', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '9999px', fontSize: '12px', color: '#9CA3AF', marginBottom: '24px' }}>
             Free Domain Deliverability Checker
           </div>
-          <h1 className="text-5xl font-bold tracking-tight mb-4">
-            Is Your Cold Email Domain <span className="text-[#00D4FF]">Burned?</span>
+          <h1 style={{ fontSize: '48px', fontWeight: 'bold', marginBottom: '16px', letterSpacing: '-0.025em' }}>
+            Is Your Cold Email Domain <span style={{ color: '#00D4FF' }}>Burned?</span>
           </h1>
-          <p className="text-lg text-gray-400 max-w-xl mx-auto">
+          <p style={{ fontSize: '18px', color: '#9CA3AF', maxWidth: '560px', margin: '0 auto' }}>
             Check SPF, DKIM, DMARC and blacklist status in 10 seconds. Get the exact fix to copy-paste.
           </p>
         </div>
 
         {/* Input Form */}
         {!result && (
-          <form onSubmit={handleSubmit} className="max-w-xl mx-auto">
-            <div className="flex gap-2">
+          <form onSubmit={handleSubmit} style={{ maxWidth: '512px', margin: '0 auto' }}>
+            <div style={{ display: 'flex', gap: '8px' }}>
               <input
                 type="text"
                 value={domain}
                 onChange={(e) => setDomain(e.target.value)}
                 placeholder="yourcompany.com"
-                className="flex-1 px-5 py-4 bg-white/5 border border-white/10 rounded-lg focus:outline-none focus:border-[#00D4FF] text-white placeholder-gray-500 text-lg"
+                style={{ flex: 1, padding: '16px 20px', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '8px', color: 'white', fontSize: '18px', outline: 'none' }}
                 required
               />
               <button
                 type="submit"
                 disabled={loading}
-                className="px-8 py-4 bg-[#00D4FF] text-black font-semibold rounded-lg hover:bg-[#00B8E6] transition disabled:opacity-50"
+                style={{ padding: '16px 32px', background: '#00D4FF', color: 'black', fontWeight: '600', borderRadius: '8px', border: 'none', cursor: 'pointer', fontSize: '16px' }}
               >
                 {loading ? 'Checking...' : 'Check'}
               </button>
             </div>
-            <p className="text-xs text-gray-500 mt-3 text-center">
+            <p style={{ fontSize: '12px', color: '#6B7280', marginTop: '12px', textAlign: 'center' }}>
               No login required. Results in ~10 seconds.
             </p>
           </form>
@@ -108,17 +109,16 @@ export default function Home() {
 
         {/* Results */}
         {result && (
-          <div className="space-y-6">
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+            
             {/* Score */}
-            <div className="text-center py-12 border border-white/10 rounded-2xl bg-white/[0.02]">
-              <div className="text-sm text-gray-400 mb-2">Deliverability Score</div>
-              <div className="text-8xl font-bold tracking-tight" style={{ color: scoreColor }}>
-                {result.score}
-              </div>
-              <div className="text-sm text-gray-500 mt-2">out of 100</div>
+            <div style={{ textAlign: 'center', padding: '48px 24px', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '16px', background: 'rgba(255,255,255,0.02)' }}>
+              <div style={{ fontSize: '14px', color: '#9CA3AF', marginBottom: '8px' }}>Deliverability Score</div>
+              <div style={{ fontSize: '96px', fontWeight: 'bold', color: scoreColor, lineHeight: 1 }}>{result.score}</div>
+              <div style={{ fontSize: '14px', color: '#6B7280', marginTop: '8px' }}>out of 100</div>
               <button
                 onClick={() => { setResult(null); setDomain(''); }}
-                className="mt-6 text-sm text-gray-400 hover:text-white underline"
+                style={{ marginTop: '24px', fontSize: '14px', color: '#9CA3AF', background: 'none', border: 'none', cursor: 'pointer', textDecoration: 'underline' }}
               >
                 Check another domain
               </button>
@@ -126,28 +126,26 @@ export default function Home() {
 
             {/* Issues */}
             {result.score < 100 && (
-              <div className="space-y-3">
-                <h2 className="text-xl font-semibold">Issues Found</h2>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                <h2 style={{ fontSize: '20px', fontWeight: '600' }}>Issues Found</h2>
 
                 {result.spf.status !== 'pass' && (
-                  <div className="p-5 bg-white/[0.03] border border-white/10 rounded-lg">
-                    <div className="flex items-center justify-between mb-3">
-                      <div className="flex items-center gap-3">
-                        <span className="text-xl" style={{ color: result.spf.status === 'fail' ? '#FF3366' : '#FFAA00' }}>
-                          {result.spf.status === 'fail' ? '✗' : '⚠'}
-                        </span>
-                        <div>
-                          <div className="font-semibold">SPF Record {result.spf.status === 'missing' ? 'Missing' : 'Invalid'}</div>
-                          <div className="text-sm text-gray-400">Emails may be marked as spam</div>
-                        </div>
+                  <div style={{ padding: '20px', background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '8px' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '12px' }}>
+                      <span style={{ fontSize: '20px', color: result.spf.status === 'fail' ? '#FF3366' : '#FFAA00' }}>
+                        {result.spf.status === 'fail' ? '✗' : '⚠'}
+                      </span>
+                      <div>
+                        <div style={{ fontWeight: '600' }}>SPF Record {result.spf.status === 'missing' ? 'Missing' : 'Invalid'}</div>
+                        <div style={{ fontSize: '14px', color: '#9CA3AF' }}>Emails may be marked as spam</div>
                       </div>
                     </div>
                     {result.spf.fix && (
-                      <div className="flex items-center gap-2 bg-black/50 p-3 rounded border border-white/10">
-                        <code className="flex-1 text-sm text-[#00D4FF] font-mono">{result.spf.fix}</code>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '8px', background: 'rgba(0,0,0,0.5)', padding: '12px', borderRadius: '6px', border: '1px solid rgba(255,255,255,0.1)' }}>
+                        <code style={{ flex: 1, fontSize: '14px', color: '#00D4FF', fontFamily: 'monospace' }}>{result.spf.fix}</code>
                         <button
                           onClick={() => copyToClipboard(result.spf.fix!, 'spf')}
-                          className="px-3 py-1 bg-white/10 hover:bg-white/20 rounded text-sm"
+                          style={{ padding: '4px 12px', background: 'rgba(255,255,255,0.1)', border: 'none', borderRadius: '4px', color: 'white', cursor: 'pointer', fontSize: '14px' }}
                         >
                           {copied === 'spf' ? '✓ Copied' : 'Copy'}
                         </button>
@@ -157,20 +155,20 @@ export default function Home() {
                 )}
 
                 {result.dkim.status !== 'pass' && (
-                  <div className="p-5 bg-white/[0.03] border border-white/10 rounded-lg">
-                    <div className="flex items-center gap-3 mb-3">
-                      <span className="text-xl" style={{ color: '#FFAA00' }}></span>
+                  <div style={{ padding: '20px', background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '8px' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '12px' }}>
+                      <span style={{ fontSize: '20px', color: '#FFAA00' }}></span>
                       <div>
-                        <div className="font-semibold">DKIM Not Configured</div>
-                        <div className="text-sm text-gray-400">Emails lack authentication signature</div>
+                        <div style={{ fontWeight: '600' }}>DKIM Not Configured</div>
+                        <div style={{ fontSize: '14px', color: '#9CA3AF' }}>Emails lack authentication signature</div>
                       </div>
                     </div>
                     {result.dkim.fix && (
-                      <div className="flex items-center gap-2 bg-black/50 p-3 rounded border border-white/10">
-                        <code className="flex-1 text-sm text-[#00D4FF] font-mono">{result.dkim.fix}</code>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '8px', background: 'rgba(0,0,0,0.5)', padding: '12px', borderRadius: '6px', border: '1px solid rgba(255,255,255,0.1)' }}>
+                        <code style={{ flex: 1, fontSize: '14px', color: '#00D4FF', fontFamily: 'monospace' }}>{result.dkim.fix}</code>
                         <button
                           onClick={() => copyToClipboard(result.dkim.fix!, 'dkim')}
-                          className="px-3 py-1 bg-white/10 hover:bg-white/20 rounded text-sm"
+                          style={{ padding: '4px 12px', background: 'rgba(255,255,255,0.1)', border: 'none', borderRadius: '4px', color: 'white', cursor: 'pointer', fontSize: '14px' }}
                         >
                           {copied === 'dkim' ? '✓ Copied' : 'Copy'}
                         </button>
@@ -180,20 +178,20 @@ export default function Home() {
                 )}
 
                 {result.dmarc.status !== 'pass' && (
-                  <div className="p-5 bg-white/[0.03] border border-white/10 rounded-lg">
-                    <div className="flex items-center gap-3 mb-3">
-                      <span className="text-xl" style={{ color: '#FFAA00' }}></span>
+                  <div style={{ padding: '20px', background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '8px' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '12px' }}>
+                      <span style={{ fontSize: '20px', color: '#FFAA00' }}>⚠</span>
                       <div>
-                        <div className="font-semibold">DMARC Record Missing</div>
-                        <div className="text-sm text-gray-400">No protection against spoofing</div>
+                        <div style={{ fontWeight: '600' }}>DMARC Record Missing</div>
+                        <div style={{ fontSize: '14px', color: '#9CA3AF' }}>No protection against spoofing</div>
                       </div>
                     </div>
                     {result.dmarc.fix && (
-                      <div className="flex items-center gap-2 bg-black/50 p-3 rounded border border-white/10">
-                        <code className="flex-1 text-sm text-[#00D4FF] font-mono">{result.dmarc.fix}</code>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '8px', background: 'rgba(0,0,0,0.5)', padding: '12px', borderRadius: '6px', border: '1px solid rgba(255,255,255,0.1)' }}>
+                        <code style={{ flex: 1, fontSize: '14px', color: '#00D4FF', fontFamily: 'monospace' }}>{result.dmarc.fix}</code>
                         <button
                           onClick={() => copyToClipboard(result.dmarc.fix!, 'dmarc')}
-                          className="px-3 py-1 bg-white/10 hover:bg-white/20 rounded text-sm"
+                          style={{ padding: '4px 12px', background: 'rgba(255,255,255,0.1)', border: 'none', borderRadius: '4px', color: 'white', cursor: 'pointer', fontSize: '14px' }}
                         >
                           {copied === 'dmarc' ? '✓ Copied' : 'Copy'}
                         </button>
@@ -203,17 +201,17 @@ export default function Home() {
                 )}
 
                 {result.blacklists.status === 'fail' && (
-                  <div className="p-5 bg-[#FF3366]/10 border border-[#FF3366]/30 rounded-lg">
-                    <div className="flex items-center gap-3 mb-3">
-                      <span className="text-xl text-[#FF3366]">✗</span>
+                  <div style={{ padding: '20px', background: 'rgba(255,51,102,0.1)', border: '1px solid rgba(255,51,102,0.3)', borderRadius: '8px' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '12px' }}>
+                      <span style={{ fontSize: '20px', color: '#FF3366' }}>✗</span>
                       <div>
-                        <div className="font-semibold text-[#FF3366]">Blacklisted on {result.blacklists.count} list(s)</div>
-                        <div className="text-sm text-gray-400">Your domain is blocked</div>
+                        <div style={{ fontWeight: '600', color: '#FF3366' }}>Blacklisted on {result.blacklists.count} list(s)</div>
+                        <div style={{ fontSize: '14px', color: '#9CA3AF' }}>Your domain is blocked</div>
                       </div>
                     </div>
-                    <div className="space-y-1 mt-3">
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '4px', marginTop: '12px' }}>
                       {result.blacklists.lists.map((list, i) => (
-                        <div key={i} className="text-sm text-gray-300">• {list}</div>
+                        <div key={i} style={{ fontSize: '14px', color: '#D1D5DB' }}>• {list}</div>
                       ))}
                     </div>
                   </div>
@@ -223,29 +221,29 @@ export default function Home() {
 
             {/* Perfect Score */}
             {result.score === 100 && (
-              <div className="p-8 bg-[#00FF88]/10 border border-[#00FF88]/30 rounded-lg text-center">
-                <div className="text-4xl mb-3">✓</div>
-                <h3 className="text-xl font-semibold text-[#00FF88] mb-2">Perfect Configuration</h3>
-                <p className="text-gray-400">Your domain is properly configured for cold email.</p>
+              <div style={{ padding: '32px', background: 'rgba(0,255,136,0.1)', border: '1px solid rgba(0,255,136,0.3)', borderRadius: '8px', textAlign: 'center' }}>
+                <div style={{ fontSize: '36px', marginBottom: '12px' }}>✓</div>
+                <h3 style={{ fontSize: '20px', fontWeight: '600', color: '#00FF88', marginBottom: '8px' }}>Perfect Configuration</h3>
+                <p style={{ color: '#9CA3AF' }}>Your domain is properly configured for cold email.</p>
               </div>
             )}
 
             {/* Email Capture */}
             {result.score < 100 && !emailSent && (
-              <div className="p-6 bg-white/[0.03] border border-[#FFAA00]/30 rounded-lg">
-                <h3 className="text-lg font-semibold mb-2">Get the full fix report by email</h3>
-                <p className="text-sm text-gray-400 mb-4">We'll send you the exact steps to fix your domain + a free weekly monitoring trial.</p>
-                <div className="flex gap-2">
+              <div style={{ padding: '24px', background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,170,0,0.3)', borderRadius: '8px' }}>
+                <h3 style={{ fontSize: '18px', fontWeight: '600', marginBottom: '8px' }}>Get the full fix report by email</h3>
+                <p style={{ fontSize: '14px', color: '#9CA3AF', marginBottom: '16px' }}>We'll send you the exact steps to fix your domain + a free weekly monitoring trial.</p>
+                <div style={{ display: 'flex', gap: '8px' }}>
                   <input
                     type="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="you@company.com"
-                    className="flex-1 px-4 py-3 bg-black/50 border border-white/10 rounded-lg focus:outline-none focus:border-[#00D4FF] text-white placeholder-gray-500"
+                    style={{ flex: 1, padding: '12px 16px', background: 'rgba(0,0,0,0.5)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '8px', color: 'white', fontSize: '14px', outline: 'none' }}
                   />
                   <button
                     onClick={sendReport}
-                    className="px-6 py-3 bg-[#00D4FF] text-black font-semibold rounded-lg hover:bg-[#00B8E6] transition"
+                    style={{ padding: '12px 24px', background: '#00D4FF', color: 'black', fontWeight: '600', borderRadius: '8px', border: 'none', cursor: 'pointer' }}
                   >
                     Send Report
                   </button>
@@ -254,33 +252,33 @@ export default function Home() {
             )}
 
             {emailSent && (
-              <div className="p-6 bg-[#00FF88]/10 border border-[#00FF88]/30 rounded-lg text-center">
-                <div className="text-2xl mb-2">✓</div>
-                <h3 className="font-semibold text-[#00FF88]">Report sent to {email}</h3>
-                <p className="text-sm text-gray-400 mt-1">Check your inbox for the fix + monitoring offer.</p>
+              <div style={{ padding: '24px', background: 'rgba(0,255,136,0.1)', border: '1px solid rgba(0,255,136,0.3)', borderRadius: '8px', textAlign: 'center' }}>
+                <div style={{ fontSize: '24px', marginBottom: '8px' }}>✓</div>
+                <h3 style={{ fontWeight: '600', color: '#00FF88' }}>Report sent to {email}</h3>
+                <p style={{ fontSize: '14px', color: '#9CA3AF', marginTop: '4px' }}>Check your inbox for the fix + monitoring offer.</p>
               </div>
             )}
 
             {/* Stripe CTA */}
-            <div className="p-8 bg-gradient-to-br from-white/[0.05] to-transparent border border-white/10 rounded-2xl text-center">
-              <h2 className="text-2xl font-bold mb-2">Never let your domain burn again</h2>
-              <p className="text-gray-400 mb-6">Weekly automated checks + instant blacklist alerts</p>
+            <div style={{ padding: '32px', background: 'linear-gradient(135deg, rgba(255,255,255,0.05), transparent)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '16px', textAlign: 'center' }}>
+              <h2 style={{ fontSize: '24px', fontWeight: 'bold', marginBottom: '8px' }}>Never let your domain burn again</h2>
+              <p style={{ color: '#9CA3AF', marginBottom: '24px' }}>Weekly automated checks + instant blacklist alerts</p>
               <a
                 href={process.env.NEXT_PUBLIC_STRIPE_LINK || 'https://buy.stripe.com/YOUR_STRIPE_LINK'}
-                className="inline-block px-8 py-4 bg-[#00D4FF] text-black font-bold rounded-lg hover:bg-[#00B8E6] transition text-lg"
+                style={{ display: 'inline-block', padding: '16px 32px', background: '#00D4FF', color: 'black', fontWeight: 'bold', borderRadius: '8px', textDecoration: 'none', fontSize: '18px' }}
               >
                 Get Weekly Monitoring — $25/mo
               </a>
-              <p className="text-xs text-gray-500 mt-3">Cancel anytime. 7-day free trial.</p>
+              <p style={{ fontSize: '12px', color: '#6B7280', marginTop: '12px' }}>Cancel anytime. 7-day free trial.</p>
             </div>
           </div>
         )}
 
         {/* Footer */}
-        <div className="mt-20 text-center text-sm text-gray-600">
+        <div style={{ marginTop: '80px', textAlign: 'center', fontSize: '14px', color: '#4B5563' }}>
           Built for cold email professionals. Check unlimited domains for free.
         </div>
       </div>
-    </main>
+    </div>
   );
 }
