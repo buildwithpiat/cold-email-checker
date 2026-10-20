@@ -1,4 +1,45 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-body { background: black; color: white; }
+/* Reset básico y estilos globales (el proyecto usa inline styles; no hace falta Tailwind). */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: #0a0a0a;
+  color: white;
+}
+
+img,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+button,
+input {
+  font: inherit;
+}
+
+:focus-visible {
+  outline: 2px solid #00d4ff;
+  outline-offset: 2px;
+}
+
+/* Utilidad para ocultar visualmente pero mantener accesible para lectores de pantalla. */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
